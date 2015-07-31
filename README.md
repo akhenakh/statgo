@@ -5,12 +5,15 @@ StatGo
 
 WORK IN PROGRESS
 
-[libstatgrab](http://www.i-scream.org/libstatgrab/) bindings for Golang.
+
+StatGo give you access to OS metrics like network interface bandwith, cpus usage ...  
+It supports FreeBSD, Linux, OSX & more, it's in fact a [libstatgrab](http://www.i-scream.org/libstatgrab/) bindings for Golang.
+
 
 ### Compilation 
 You need at least libstatgrab 0.91, Debian & Ubuntu only have 0.90 ...
 
-On Linux, OSX & FreeBSD, you can simply install libstatgrab it with the usual
+On Linux, OSX & FreeBSD, you can simply install libstatgrab with the usual commands:
 ```
 ./configure --prefix=/usr/local
 make
