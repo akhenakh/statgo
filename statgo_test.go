@@ -1,7 +1,6 @@
 package statgo
 
 import (
-	"log"
 	"math"
 	"testing"
 	"time"
@@ -16,7 +15,7 @@ func TestHostInfo(t *testing.T) {
 	assert.NotEmpty(t, hi.HostName, hi.OSName, hi.OSRelease, hi.OSVersion, hi.Platform)
 	assert.True(t, hi.NCPUs > 0, hi.MaxCPUs > 0)
 
-	log.Println(hi)
+	t.Log(hi)
 }
 
 func TestCPU(t *testing.T) {
@@ -29,5 +28,15 @@ func TestCPU(t *testing.T) {
 	cpu = s.CPUStats()
 	assert.False(t, math.IsNaN(cpu.User), math.IsNaN(cpu.Kernel), math.IsNaN(cpu.Idle))
 	assert.False(t, math.IsNaN(cpu.LoadMin1), math.IsNaN(cpu.LoadMin5), math.IsNaN(cpu.LoadMin15))
-	log.Println(cpu)
+	t.Log(cpu)
+}
+
+func TestFSInfos(t *testing.T) {
+	s := NewStat()
+	f := s.FSInfo()
+	assert.True(t, len(f) > 0)
+
+	for _, fs := range f {
+		t.Log(fs)
+	}
 }

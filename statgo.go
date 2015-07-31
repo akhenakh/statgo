@@ -48,6 +48,21 @@ type CPUStats struct {
 	timeTaken time.Time
 }
 
+// FSInfo contains filesystem & mountpoints informations
+type FSInfo struct {
+	DeviceName      string
+	FSType          string
+	MountPoint      string
+	Size            int
+	Used            int
+	Free            int
+	Available       int
+	TotalInodes     int
+	UsedInodes      int
+	FreeInodes      int
+	AvailableInodes int
+}
+
 // NewStat return a new Stat handle
 func NewStat() *Stat {
 	s := &Stat{}
@@ -115,6 +130,35 @@ func (s *Stat) CPUStats() *CPUStats {
 	return cpu
 }
 
+func (s *Stat) FSInfo() []*FSInfo {
+
+	var fs_size C.size_t
+	var cArray *C.sg_fs_stats = C.sg_get_fs_stats(&fs_size)
+	length := int(fs_size)
+	slice := (*[1 << 30]C.sg_fs_stats)(unsafe.Pointer(cArray))[:length:length]
+
+	var res []*FSInfo
+
+	for _, v := range slice {
+		f := &FSInfo{
+			DeviceName:      C.GoString(v.device_name),
+			FSType:          C.GoString(v.fs_type),
+			MountPoint:      C.GoString(v.mnt_point),
+			Size:            int(v.size),
+			Used:            int(v.used),
+			Free:            int(v.free),
+			Available:       int(v.avail),
+			TotalInodes:     int(v.total_inodes),
+			UsedInodes:      int(v.used_inodes),
+			FreeInodes:      int(v.free_inodes),
+			AvailableInodes: int(v.avail_inodes),
+		}
+		res = append(res, f)
+	}
+
+	return res
+}
+
 func free(s *Stat) {
 	lock.Lock()
 	C.sg_shutdown()
@@ -161,4 +205,30 @@ func (h *HostInfo) String() string {
 		h.NCPUs,
 		h.MaxCPUs,
 		h.BitWidth)
+}
+
+func (fs *FSInfo) String() string {
+	return fmt.Sprintf(
+		"DeviceName:\t%s\n"+
+			"FSType:\t%s\n"+
+			"MountPoint:\t%s\n"+
+			"Size:\t%d\n"+
+			"Used:\t%d\n"+
+			"Free:\t%d\n"+
+			"Available:\t%d\n"+
+			"TotalInodes:\t%d\n"+
+			"UsedInodes:\t%d\n"+
+			"FreeInodes:\t%d\n"+
+			"AvailableInodes:\t%d\n",
+		fs.DeviceName,
+		fs.FSType,
+		fs.MountPoint,
+		fs.Size,
+		fs.Used,
+		fs.Free,
+		fs.Available,
+		fs.TotalInodes,
+		fs.UsedInodes,
+		fs.FreeInodes,
+		fs.AvailableInodes)
 }
