@@ -1,0 +1,47 @@
+box: google/golang
+dev:
+  steps:
+    - script:
+      name: build libstatgrab
+      code: |
+        curl -o libstatgrab-0.91.tar.gz http://www.mirrorservice.org/pub/i-scream/libstatgrab/libstatgrab-0.91.tar.gz
+        tar zxf libstatgrab-0.91.tar.gz
+        cd libstatgrab-0.91
+        ./configure
+        sudo make install
+        cd ..
+        rm -r libstatgrab-0.91
+    - internal/watch:
+        code: |
+          go build ./...
+        reload: true
+
+# Build definition
+build:
+  # The steps that will be executed on build
+  steps:
+    - script:
+      name: build libstatgrab
+      code: |
+        curl -o libstatgrab-0.91.tar.gz http://www.mirrorservice.org/pub/i-scream/libstatgrab/libstatgrab-0.91.tar.gz
+        tar zxf libstatgrab-0.91.tar.gz
+        cd libstatgrab-0.91
+        ./configure
+        sudo make install
+        cd ..
+        rm -r libstatgrab-0.91
+
+    # golint step!
+    - wercker/golint
+
+    # Build the project
+    - script:
+        name: go build
+        code: |
+          go build ./...
+    # Test the project
+    - script:
+        name: go test
+        code: |
+          go get github.com/stretchr/testify/assert
+          go test -v ./...
