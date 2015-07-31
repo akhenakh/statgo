@@ -1,4 +1,4 @@
-Statgo
+StatGo
 ======
 
 WORK IN PROGRESS

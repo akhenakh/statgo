@@ -7,10 +7,10 @@ dev:
         curl -o libstatgrab-0.91.tar.gz http://www.mirrorservice.org/pub/i-scream/libstatgrab/libstatgrab-0.91.tar.gz
         tar zxf libstatgrab-0.91.tar.gz
         cd libstatgrab-0.91
-        ./configure
+        ./configure --prefix=/usr
         sudo make install
         cd ..
-        rm -r libstatgrab-0.91
+        rm -rf libstatgrab-0.91 libstatgrab-0.91.tar.gz
     - internal/watch:
         code: |
           go build ./...
@@ -26,11 +26,10 @@ build:
         curl -o libstatgrab-0.91.tar.gz http://www.mirrorservice.org/pub/i-scream/libstatgrab/libstatgrab-0.91.tar.gz
         tar zxf libstatgrab-0.91.tar.gz
         cd libstatgrab-0.91
-        ./configure
+        ./configure --prefix=/usr
         sudo make install
         cd ..
-        rm -r libstatgrab-0.91
-
+        rm -rf libstatgrab-0.91 libstatgrab-0.91.tar.gz
     # golint step!
     - wercker/golint
 
