@@ -34,6 +34,25 @@ Note: On OSX you need to install gcc to access cgo.
 ```
 s := NewStat()
 hi := s.HostInfo()
-fmt.Println(hi.OSName)
-FreeBSD
+fmt.Println(hi)
+OSName: Darwin
+OSRelease:  14.4.0
+OSVersion:  Darwin Kernel Version 14.4.0: Thu May 28 11:35:04 PDT 2015; root:xnu-2782.30.5~1/RELEASE_X86_64
+Platform:   x86_64
+HostName:   kamoulox
+NCPUs:      4
+MaxCPUs:    4
+BitWidth:   64
+
+cpu := s.CPUStats()
+fmt.Println(cpu)
+User:       7.500000
+Kernel:     2.500000
+Idle:       90.000000
+IOWait      0.000000
+Swap:       0.000000
+Nice:       0.000000
+LoadMin1:   2.206055
+LoadMin5:   2.031250
+LoadMin15:  1.970703
 ```

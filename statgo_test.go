@@ -21,12 +21,12 @@ func TestHostInfo(t *testing.T) {
 
 func TestCPU(t *testing.T) {
 	s := NewStat()
-	cpu := s.CPU()
+	cpu := s.CPUStats()
 	assert.NotNil(t, s)
 	assert.NotNil(t, cpu)
 	time.Sleep(100 * time.Millisecond)
 
-	cpu = s.CPU()
+	cpu = s.CPUStats()
 	assert.False(t, math.IsNaN(cpu.User), math.IsNaN(cpu.Kernel), math.IsNaN(cpu.Idle))
 	assert.False(t, math.IsNaN(cpu.LoadMin1), math.IsNaN(cpu.LoadMin5), math.IsNaN(cpu.LoadMin15))
 	log.Println(cpu)

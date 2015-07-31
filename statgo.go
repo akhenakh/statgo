@@ -34,18 +34,18 @@ type HostInfo struct {
 	systime   time.Time
 }
 
-// CPUMetrics contains cpu metrics
-type CPUMetrics struct {
+// CPUStats contains cpu stats
+type CPUStats struct {
 	User      float64
 	Kernel    float64
 	Idle      float64
 	IOWait    float64
 	Swap      float64
 	Nice      float64
-	timeTaken time.Time
 	LoadMin1  float64
 	LoadMin5  float64
 	LoadMin15 float64
+	timeTaken time.Time
 }
 
 // NewStat return a new Stat handle
@@ -83,10 +83,10 @@ func (s *Stat) HostInfo() *HostInfo {
 	return hi
 }
 
-// CPU returns a CPUMetrics object
+// CPU returns a CPUStats object
 // note that 1st call to 100ms may return NaN as values
 // Go equivalent to sg_cpu_percents
-func (s *Stat) CPU() *CPUMetrics {
+func (s *Stat) CPUStats() *CPUStats {
 	lock.Lock()
 	defer lock.Unlock()
 	// Throw away the first reading as thats averaged over the machines uptime
@@ -99,7 +99,7 @@ func (s *Stat) CPU() *CPUMetrics {
 
 	load_stat := C.sg_get_load_stats(nil)
 
-	cpu := &CPUMetrics{
+	cpu := &CPUStats{
 		User:      float64(C.double(s.cpu_percent.user)),
 		Kernel:    float64(C.double(s.cpu_percent.kernel)),
 		Idle:      float64(C.double(s.cpu_percent.idle)),
@@ -121,7 +121,7 @@ func free(s *Stat) {
 	lock.Unlock()
 }
 
-func (c *CPUMetrics) String() string {
+func (c *CPUStats) String() string {
 	return fmt.Sprintf(
 		"User:\t\t%f\n"+
 			"Kernel:\t\t%f\n"+
@@ -145,11 +145,11 @@ func (c *CPUMetrics) String() string {
 
 func (h *HostInfo) String() string {
 	return fmt.Sprintf(
-		"OSName:\t\t%s\n"+
-			"OSRelease:\t\t%s\n"+
-			"OSVersion:\t\t%s\n"+
-			"Platform\t\t%s\n"+
-			"HostName:\t\t%s\n"+
+		"OSName:\t%s\n"+
+			"OSRelease:\t%s\n"+
+			"OSVersion:\t%s\n"+
+			"Platform:\t%s\n"+
+			"HostName:\t%s\n"+
 			"NCPUs:\t\t%d\n"+
 			"MaxCPUs:\t%d\n"+
 			"BitWidth:\t%d\n",
