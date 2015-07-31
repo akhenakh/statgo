@@ -132,6 +132,8 @@ func (s *Stat) CPUStats() *CPUStats {
 
 // FSInfos return an FSInfo struct per mounted filesystem
 func (s *Stat) FSInfos() []*FSInfo {
+	lock.Lock()
+	defer lock.Unlock()
 	var fs_size C.size_t
 	var cArray *C.sg_fs_stats = C.sg_get_fs_stats(&fs_size)
 	length := int(fs_size)
