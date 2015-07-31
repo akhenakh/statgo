@@ -34,7 +34,7 @@ type HostInfo struct {
 	systime   time.Time
 }
 
-// CPUMetrics
+// CPUMetrics contains cpu metrics
 type CPUMetrics struct {
 	User      float64
 	Kernel    float64
@@ -141,4 +141,24 @@ func (c *CPUMetrics) String() string {
 		c.LoadMin1,
 		c.LoadMin5,
 		c.LoadMin15)
+}
+
+func (h *HostInfo) String() string {
+	return fmt.Sprintf(
+		"OSName:\t\t%s\n"+
+			"OSRelease:\t\t%s\n"+
+			"OSVersion:\t\t%s\n"+
+			"Platform\t\t%s\n"+
+			"HostName:\t\t%s\n"+
+			"NCPUs:\t\t%d\n"+
+			"MaxCPUs:\t%d\n"+
+			"BitWidth:\t%d\n",
+		h.OSName,
+		h.OSRelease,
+		h.OSVersion,
+		h.Platform,
+		h.HostName,
+		h.NCPUs,
+		h.MaxCPUs,
+		h.BitWidth)
 }

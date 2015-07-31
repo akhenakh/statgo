@@ -15,6 +15,8 @@ func TestHostInfo(t *testing.T) {
 	assert.NotNil(t, s)
 	assert.NotEmpty(t, hi.HostName, hi.OSName, hi.OSRelease, hi.OSVersion, hi.Platform)
 	assert.True(t, hi.NCPUs > 0, hi.MaxCPUs > 0)
+
+	log.Println(hi)
 }
 
 func TestCPU(t *testing.T) {
@@ -22,7 +24,6 @@ func TestCPU(t *testing.T) {
 	cpu := s.CPU()
 	assert.NotNil(t, s)
 	assert.NotNil(t, cpu)
-	assert.True(t, math.IsNaN(cpu.User), math.IsNaN(cpu.Kernel), math.IsNaN(cpu.Idle))
 	time.Sleep(100 * time.Millisecond)
 
 	cpu = s.CPU()
