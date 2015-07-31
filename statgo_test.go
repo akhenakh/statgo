@@ -33,7 +33,7 @@ func TestCPU(t *testing.T) {
 
 func TestFSInfos(t *testing.T) {
 	s := NewStat()
-	f := s.FSInfo()
+	f := s.FSInfos()
 	assert.True(t, len(f) > 0)
 
 	for _, fs := range f {

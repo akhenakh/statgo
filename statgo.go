@@ -130,8 +130,8 @@ func (s *Stat) CPUStats() *CPUStats {
 	return cpu
 }
 
-func (s *Stat) FSInfo() []*FSInfo {
-
+// FSInfos return an FSInfo struct per mounted filesystem
+func (s *Stat) FSInfos() []*FSInfo {
 	var fs_size C.size_t
 	var cArray *C.sg_fs_stats = C.sg_get_fs_stats(&fs_size)
 	length := int(fs_size)

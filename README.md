@@ -55,4 +55,18 @@ Nice:       0.000000
 LoadMin1:   2.206055
 LoadMin5:   2.031250
 LoadMin15:  1.970703
+
+f := s.FSInfos()
+fmt.Println(f[0])
+DeviceName: /dev/disk1
+FSType: hfs
+MountPoint: /
+Size:   249769230336
+Used:   224467705856
+Free:   25301524480
+Available:  25039380480
+TotalInodes:    60978814
+UsedInodes: 54865684
+FreeInodes: 6113130
+AvailableInodes:    6113130
 ```
