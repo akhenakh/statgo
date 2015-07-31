@@ -1,3 +1,5 @@
+[![wercker status](https://app.wercker.com/status/c56e26bf18be587114d26764a7a0ce7a/m "wercker status")](https://app.wercker.com/project/bykey/c56e26bf18be587114d26764a7a0ce7a)
+
 StatGo
 ======
 
