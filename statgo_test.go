@@ -68,3 +68,12 @@ func TestDisksIO(t *testing.T) {
 
 	t.Log(d)
 }
+
+func TestNetIO(t *testing.T) {
+	s := NewStat()
+	n := s.NetIOStats()
+	assert.NotNil(t, s)
+	assert.NotNil(t, n)
+
+	t.Log(n)
+}

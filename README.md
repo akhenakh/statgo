@@ -11,7 +11,7 @@ WORK IN PROGRESS
 - [x]  mem stats
 - [x]  swap stat 
 - [x]  io stats
-- [ ]  net io stats
+- [x]  net io stats
 - [ ]  process count
 - [ ]  page stats
 
