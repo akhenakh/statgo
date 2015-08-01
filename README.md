@@ -30,7 +30,7 @@ Note: On OSX you need to install gcc to access cgo.
 ### Usage
 ```
 s := NewStat()
-hi := s.HostInfo()
+hi := s.HostInfos()
 OSName: Darwin
 OSRelease:  14.4.0
 OSVersion:  Darwin Kernel Version 14.4.0: Thu May 28 11:35:04 PDT 2015; root:xnu-2782.30.5~1/RELEASE_X86_64

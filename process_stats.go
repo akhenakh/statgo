@@ -6,7 +6,7 @@ import "C"
 import "fmt"
 
 // ProcessStat contains processes count stats
-type ProcessStat struct {
+type ProcessStats struct {
 	Total    int
 	Running  int
 	Sleeping int
@@ -17,7 +17,7 @@ type ProcessStat struct {
 // CPUStats get cpu related stats
 // note that 1st call to 100ms may return NaN as values
 // Go equivalent to sg_cpu_percents
-func (s *Stat) ProcessStats() *ProcessStat {
+func (s *Stat) ProcessStats() *ProcessStats {
 	lock.Lock()
 	defer lock.Unlock()
 
@@ -25,7 +25,7 @@ func (s *Stat) ProcessStats() *ProcessStat {
 
 	p_stat := C.sg_get_process_count_of(C.sg_entire_process_count)
 
-	p := &ProcessStat{
+	p := &ProcessStats{
 		Total:    int(p_stat.total),
 		Running:  int(p_stat.running),
 		Sleeping: int(p_stat.sleeping),
@@ -35,7 +35,7 @@ func (s *Stat) ProcessStats() *ProcessStat {
 	return p
 }
 
-func (p *ProcessStat) String() string {
+func (p *ProcessStats) String() string {
 	return fmt.Sprintf(
 		"Total:\t\t%d\n"+
 			"Running:\t%d\n"+

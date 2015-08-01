@@ -9,7 +9,7 @@ import (
 )
 
 // NetIOStat contains network interfaces stats
-type NetIOStat struct {
+type NetIOStats struct {
 	IntName    string
 	TX         int
 	RX         int
@@ -22,7 +22,7 @@ type NetIOStat struct {
 
 // NetIOStats get interface ios related stats
 // Go equivalent to sg_get_network_io_stats
-func (s *Stat) NetIOStats() []*NetIOStat {
+func (s *Stat) NetIOStats() []*NetIOStats {
 	lock.Lock()
 	defer lock.Unlock()
 
@@ -31,10 +31,10 @@ func (s *Stat) NetIOStats() []*NetIOStat {
 	length := int(num_network_stats)
 	slice := (*[1 << 16]C.sg_network_io_stats)(unsafe.Pointer(cArray))[:length:length]
 
-	var res []*NetIOStat
+	var res []*NetIOStats
 
 	for _, v := range slice {
-		n := &NetIOStat{
+		n := &NetIOStats{
 			IntName:    C.GoString(v.interface_name),
 			TX:         int(v.tx),
 			RX:         int(v.rx),
@@ -49,7 +49,7 @@ func (s *Stat) NetIOStats() []*NetIOStat {
 	return res
 }
 
-func (n *NetIOStat) String() string {
+func (n *NetIOStats) String() string {
 	return fmt.Sprintf(
 		"IntName:\t%s\n"+
 			"TX:\t\t%d\n"+

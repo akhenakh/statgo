@@ -10,7 +10,7 @@ import (
 )
 
 // HostInfo contains informations related to the system
-type HostInfo struct {
+type HostInfos struct {
 	OSName    string
 	OSRelease string
 	OSVersion string
@@ -25,12 +25,12 @@ type HostInfo struct {
 
 // HostInfo get the host informations
 // Go equivalent to sg_host_info
-func (s *Stat) HostInfo() *HostInfo {
+func (s *Stat) HostInfos() *HostInfos {
 	lock.Lock()
 	stats := C.sg_get_host_info(nil)
 	lock.Unlock()
 
-	hi := &HostInfo{
+	hi := &HostInfos{
 		OSName:    C.GoString(stats.os_name),
 		OSRelease: C.GoString(stats.os_release),
 		OSVersion: C.GoString(stats.os_version),
@@ -47,7 +47,7 @@ func (s *Stat) HostInfo() *HostInfo {
 	return hi
 }
 
-func (h *HostInfo) String() string {
+func (h *HostInfos) String() string {
 	return fmt.Sprintf(
 		"OSName:\t\t%s\n"+
 			"OSRelease:\t%s\n"+

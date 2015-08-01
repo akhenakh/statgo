@@ -9,7 +9,7 @@ import (
 )
 
 // FSInfo contains filesystem & mountpoints informations
-type FSInfo struct {
+type FSInfos struct {
 	DeviceName      string
 	FSType          string
 	MountPoint      string
@@ -25,7 +25,7 @@ type FSInfo struct {
 
 // FSInfos return an FSInfo struct per mounted filesystem
 // Go equivalent to sg_get_fs_stats
-func (s *Stat) FSInfos() []*FSInfo {
+func (s *Stat) FSInfos() []*FSInfos {
 	lock.Lock()
 	defer lock.Unlock()
 	var fs_size C.size_t
@@ -33,10 +33,10 @@ func (s *Stat) FSInfos() []*FSInfo {
 	length := int(fs_size)
 	slice := (*[1 << 16]C.sg_fs_stats)(unsafe.Pointer(cArray))[:length:length]
 
-	var res []*FSInfo
+	var res []*FSInfos
 
 	for _, v := range slice {
-		f := &FSInfo{
+		f := &FSInfos{
 			DeviceName:      C.GoString(v.device_name),
 			FSType:          C.GoString(v.fs_type),
 			MountPoint:      C.GoString(v.mnt_point),
@@ -54,7 +54,7 @@ func (s *Stat) FSInfos() []*FSInfo {
 	return res
 }
 
-func (fs *FSInfo) String() string {
+func (fs *FSInfos) String() string {
 	return fmt.Sprintf(
 		"DeviceName:\t\t\t%s\n"+
 			"FSType:\t\t\t\t%s\n"+

@@ -9,7 +9,7 @@ import (
 )
 
 // DiskIOStats contains disk io stats
-type DiskIOStat struct {
+type DiskIOStats struct {
 	DiskName   string
 	ReadBytes  int
 	WriteBytes int
@@ -18,7 +18,7 @@ type DiskIOStat struct {
 // CPUStats get cpu related stats
 // note that 1st call to 100ms may return NaN as values
 // Go equivalent to sg_cpu_percents
-func (s *Stat) DiskIOStats() []*DiskIOStat {
+func (s *Stat) DiskIOStats() []*DiskIOStats {
 	lock.Lock()
 	defer lock.Unlock()
 
@@ -27,10 +27,10 @@ func (s *Stat) DiskIOStats() []*DiskIOStat {
 	length := int(num_diskio_stats)
 	slice := (*[1 << 16]C.sg_disk_io_stats)(unsafe.Pointer(cArray))[:length:length]
 
-	var res []*DiskIOStat
+	var res []*DiskIOStats
 
 	for _, v := range slice {
-		f := &DiskIOStat{
+		f := &DiskIOStats{
 			DiskName:   C.GoString(v.disk_name),
 			ReadBytes:  int(v.read_bytes),
 			WriteBytes: int(v.write_bytes),
@@ -41,7 +41,7 @@ func (s *Stat) DiskIOStats() []*DiskIOStat {
 
 }
 
-func (d *DiskIOStat) String() string {
+func (d *DiskIOStats) String() string {
 	return fmt.Sprintf(
 		"DiskName:\t%s\n"+
 			"ReadBytes:\t%d\n"+
