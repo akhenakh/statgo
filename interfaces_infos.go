@@ -89,7 +89,7 @@ func (s *Stat) InteraceInfos() []*InterfaceInfo {
 	var iface_count C.size_t
 	var cArray *C.sg_network_iface_stats = C.sg_get_network_iface_stats(&iface_count)
 	length := int(iface_count)
-	slice := (*[1 << 30]C.sg_network_iface_stats)(unsafe.Pointer(cArray))[:length:length]
+	slice := (*[1 << 16]C.sg_network_iface_stats)(unsafe.Pointer(cArray))[:length:length]
 
 	var res []*InterfaceInfo
 
