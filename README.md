@@ -10,7 +10,7 @@ WORK IN PROGRESS
 - [x]  network interfaces infos
 - [x]  mem stats
 - [x]  swap stat 
-- [ ]  io stats
+- [x]  io stats
 - [ ]  net io stats
 - [ ]  process count
 - [ ]  page stats

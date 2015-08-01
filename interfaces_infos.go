@@ -8,6 +8,14 @@ import (
 	"unsafe"
 )
 
+type InterfaceInfo struct {
+	Name   string
+	Speed  int
+	Factor int
+	Duplex InterfaceDuplexType
+	State  InterfaceState
+}
+
 // InterfaceDuplexType network interface duplex type
 type InterfaceDuplexType int
 
@@ -73,14 +81,6 @@ func (s *InterfaceState) UnmarshalText(text []byte) error {
 		}
 	}
 	return fmt.Errorf("unknown status")
-}
-
-type InterfaceInfo struct {
-	Name   string
-	Speed  int
-	Factor int
-	Duplex InterfaceDuplexType
-	State  InterfaceState
 }
 
 func (s *Stat) InteraceInfos() []*InterfaceInfo {

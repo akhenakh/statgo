@@ -59,3 +59,12 @@ func TestVM(t *testing.T) {
 
 	t.Log(m)
 }
+
+func TestDisksIO(t *testing.T) {
+	s := NewStat()
+	d := s.DiskIOStats()
+	assert.NotNil(t, s)
+	assert.NotNil(t, d)
+
+	t.Log(d)
+}
