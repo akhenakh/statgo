@@ -57,7 +57,7 @@ func (s *Stat) FSInfos() []*FSInfo {
 func (fs *FSInfo) String() string {
 	return fmt.Sprintf(
 		"DeviceName:\t\t%s\n"+
-			"FSType:\t\t\t%s\n"+
+			"FSType:\t\t%s\n"+
 			"MountPoint:\t\t%s\n"+
 			"Size:\t\t\t%d\n"+
 			"Used:\t\t\t%d\n"+

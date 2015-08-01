@@ -8,8 +8,8 @@ WORK IN PROGRESS
 - [x]  cpu stats
 - [x]  load average
 - [x]  network interfaces infos
-- [ ]  mem stats
-- [ ]  swap stat 
+- [x]  mem stats
+- [x]  swap stat 
 - [ ]  io stats
 - [ ]  net io stats
 - [ ]  process count
@@ -54,7 +54,6 @@ MaxCPUs:    4
 BitWidth:   64
 
 cpu := s.CPUStats()
-fmt.Println(cpu)
 User:       7.500000
 Kernel:     2.500000
 Idle:       90.000000
@@ -67,17 +66,17 @@ LoadMin15:  1.970703
 
 f := s.FSInfos()
 fmt.Println(f[0])
-DeviceName: /dev/disk1
-FSType: hfs
-MountPoint: /
-Size:   249769230336
-Used:   224467705856
-Free:   25301524480
-Available:  25039380480
-TotalInodes:    60978814
-UsedInodes: 54865684
-FreeInodes: 6113130
-AvailableInodes:    6113130
+DeviceName:     /dev/disk1
+ FSType:         hfs
+MountPoint:     /
+Size:           249769230336
+Used:           224248410112
+Free:           25520820224
+Available:      25258676224
+TotalInodes:        60978814
+UsedInodes:     54812145
+FreeInodes:     6166669
+AvailableInodes:    6166669
 
 interfaces := s.InteraceInfos()
 fmt.Println(interfaces[0])
@@ -86,4 +85,13 @@ Speed:  0
 Factor: 1000000
 Duplex: Full Duplex
 State:  UP
+
+m := s.MemStats()
+Total:      16649420800
+Free:       4323848192
+Used:       12325572608
+Cache:      0
+SwapTotal:  3221225472
+SwapUsed:   2528378880
+SwapFree:   692846592
 ```

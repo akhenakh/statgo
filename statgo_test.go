@@ -50,3 +50,12 @@ func TestInterfaceInfos(t *testing.T) {
 		t.Log(i)
 	}
 }
+
+func TestVM(t *testing.T) {
+	s := NewStat()
+	m := s.MemStats()
+	assert.NotNil(t, s)
+	assert.NotNil(t, m)
+
+	t.Log(m)
+}

@@ -22,7 +22,7 @@ type CPUStats struct {
 	timeTaken time.Time
 }
 
-// CPU returns a CPUStats object
+// CPUStats get cpu related stats
 // note that 1st call to 100ms may return NaN as values
 // Go equivalent to sg_cpu_percents
 func (s *Stat) CPUStats() *CPUStats {
