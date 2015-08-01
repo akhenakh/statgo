@@ -52,8 +52,8 @@ func (s *Stat) NetIOStats() []*NetIOStat {
 func (n *NetIOStat) String() string {
 	return fmt.Sprintf(
 		"IntName:\t%s\n"+
-			"TX:\t%d\n"+
-			"RX:\t%d\n"+
+			"TX:\t\t%d\n"+
+			"RX:\t\t%d\n"+
 			"IPackets:\t%d\n"+
 			"OPackets:\t%d\n"+
 			"IErrors:\t%d\n"+

@@ -56,16 +56,16 @@ func (s *Stat) FSInfos() []*FSInfo {
 
 func (fs *FSInfo) String() string {
 	return fmt.Sprintf(
-		"DeviceName:\t\t%s\n"+
-			"FSType:\t\t%s\n"+
-			"MountPoint:\t\t%s\n"+
-			"Size:\t\t\t%d\n"+
-			"Used:\t\t\t%d\n"+
-			"Free:\t\t\t%d\n"+
-			"Available:\t\t%d\n"+
+		"DeviceName:\t\t\t%s\n"+
+			"FSType:\t\t\t\t%s\n"+
+			"MountPoint:\t\t\t%s\n"+
+			"Size:\t\t\t\t%d\n"+
+			"Used:\t\t\t\t%d\n"+
+			"Free:\t\t\t\t%d\n"+
+			"Available:\t\t\t%d\n"+
 			"TotalInodes:\t\t%d\n"+
-			"UsedInodes:\t\t%d\n"+
-			"FreeInodes:\t\t%d\n"+
+			"UsedInodes:\t\t\t%d\n"+
+			"FreeInodes:\t\t\t%d\n"+
 			"AvailableInodes:\t%d\n",
 		fs.DeviceName,
 		fs.FSType,

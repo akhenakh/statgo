@@ -2,19 +2,6 @@
 
 StatGo
 ======
-
-WORK IN PROGRESS
-- [x]  Host infos
-- [x]  cpu stats
-- [x]  load average
-- [x]  network interfaces infos
-- [x]  mem stats
-- [x]  swap stat 
-- [x]  io stats
-- [x]  net io stats
-- [ ]  process count
-- [ ]  page stats
-
 StatGo give you access to OS metrics like network interface bandwith, cpus usage ...  
 It supports FreeBSD, Linux, OSX & more, it's in fact a [libstatgrab](http://www.i-scream.org/libstatgrab/) binding for Golang.  
 Tested on FreeBSD, OSX, Linux amd64, Linux arm.
@@ -44,7 +31,6 @@ Note: On OSX you need to install gcc to access cgo.
 ```
 s := NewStat()
 hi := s.HostInfo()
-fmt.Println(hi)
 OSName: Darwin
 OSRelease:  14.4.0
 OSVersion:  Darwin Kernel Version 14.4.0: Thu May 28 11:35:04 PDT 2015; root:xnu-2782.30.5~1/RELEASE_X86_64
@@ -65,22 +51,20 @@ LoadMin1:   2.206055
 LoadMin5:   2.031250
 LoadMin15:  1.970703
 
-f := s.FSInfos()
-fmt.Println(f[0])
-DeviceName:     /dev/disk1
- FSType:         hfs
-MountPoint:     /
-Size:           249769230336
-Used:           224248410112
-Free:           25520820224
-Available:      25258676224
+f := s.FSInfos()[0]
+DeviceName:         /dev/disk1
+FSType:             hfs
+MountPoint:         /
+Size:               249769230336
+Used:               224367140864
+Free:               25402089472
+Available:          25139945472
 TotalInodes:        60978814
-UsedInodes:     54812145
-FreeInodes:     6166669
-AvailableInodes:    6166669
+UsedInodes:         54841132
+FreeInodes:         6137682
+AvailableInodes:    6137682
 
-interfaces := s.InteraceInfos()
-fmt.Println(interfaces[0])
+interfaces := s.InteraceInfos()[0]
 Name:   en2
 Speed:  0
 Factor: 1000000
@@ -95,4 +79,34 @@ Cache:      0
 SwapTotal:  3221225472
 SwapUsed:   2528378880
 SwapFree:   692846592
+
+n := s.NetIOStats()
+IntName:    en0
+TX:         2310272606
+RX:         3336240203
+IPackets:   114473581
+OPackets:   129430304
+IErrors:    0
+OErrors:    0
+Collisions: 0
+
+p := s.ProcessStats()
+Total:  343
+Running:    335
+Sleeping:   0
+Stopped:    0
+Zombie:     8
 ```
+
+### Status
+WORK IN PROGRESS
+- [x]  Host infos
+- [x]  cpu stats
+- [x]  load average
+- [x]  network interfaces infos
+- [x]  mem stats
+- [x]  swap stat 
+- [x]  io stats
+- [x]  net io stats
+- [x]  process count
+- [ ]  page stats

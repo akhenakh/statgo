@@ -49,7 +49,7 @@ func (s *Stat) HostInfo() *HostInfo {
 
 func (h *HostInfo) String() string {
 	return fmt.Sprintf(
-		"OSName:\t%s\n"+
+		"OSName:\t\t%s\n"+
 			"OSRelease:\t%s\n"+
 			"OSVersion:\t%s\n"+
 			"Platform:\t%s\n"+

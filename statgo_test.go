@@ -77,3 +77,12 @@ func TestNetIO(t *testing.T) {
 
 	t.Log(n)
 }
+
+func TestProcess(t *testing.T) {
+	s := NewStat()
+	p := s.ProcessStats()
+	assert.NotNil(t, s)
+	assert.NotNil(t, p)
+
+	t.Log(p)
+}
