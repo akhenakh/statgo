@@ -4,10 +4,19 @@ StatGo
 ======
 
 WORK IN PROGRESS
-
+- [x]  Host infos
+- [x]  cpu stats
+- [x]  load average
+- [x]  network interfaces infos
+- [ ]  mem stats
+- [ ]  swap stat 
+- [ ]  io stats
+- [ ]  net io stats
+- [ ]  process count
+- [ ]  page stats
 
 StatGo give you access to OS metrics like network interface bandwith, cpus usage ...  
-It supports FreeBSD, Linux, OSX & more, it's in fact a [libstatgrab](http://www.i-scream.org/libstatgrab/) bindings for Golang.
+It supports FreeBSD, Linux, OSX & more, it's in fact a [libstatgrab](http://www.i-scream.org/libstatgrab/) binding for Golang.
 
 
 ### Compilation 
@@ -69,4 +78,12 @@ TotalInodes:    60978814
 UsedInodes: 54865684
 FreeInodes: 6113130
 AvailableInodes:    6113130
+
+interfaces := s.InteraceInfos()
+fmt.Println(interfaces[0])
+Name:   en2
+Speed:  0
+Factor: 1000000
+Duplex: Full Duplex
+State:  UP
 ```

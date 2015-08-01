@@ -40,3 +40,13 @@ func TestFSInfos(t *testing.T) {
 		t.Log(fs)
 	}
 }
+
+func TestInterfaceInfos(t *testing.T) {
+	s := NewStat()
+	interfaces := s.InteraceInfos()
+	assert.True(t, len(interfaces) > 0)
+
+	for _, i := range interfaces {
+		t.Log(i)
+	}
+}
