@@ -64,7 +64,7 @@ UsedInodes:         54841132
 FreeInodes:         6137682
 AvailableInodes:    6137682
 
-interfaces := s.InteraceInfos()[0]
+interfaces := s.InterfaceInfos()[0]
 Name:   en2
 Speed:  0
 Factor: 1000000

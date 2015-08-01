@@ -8,7 +8,7 @@ import (
 	"unsafe"
 )
 
-type InterfaceInfo struct {
+type InterfaceInfos struct {
 	Name   string
 	Speed  int
 	Factor int
@@ -83,7 +83,7 @@ func (s *InterfaceState) UnmarshalText(text []byte) error {
 	return fmt.Errorf("unknown status")
 }
 
-func (s *Stat) InteraceInfos() []*InterfaceInfo {
+func (s *Stat) InteraceInfos() []*InterfaceInfos {
 	lock.Lock()
 	defer lock.Unlock()
 	var iface_count C.size_t
@@ -91,10 +91,10 @@ func (s *Stat) InteraceInfos() []*InterfaceInfo {
 	length := int(iface_count)
 	slice := (*[1 << 16]C.sg_network_iface_stats)(unsafe.Pointer(cArray))[:length:length]
 
-	var res []*InterfaceInfo
+	var res []*InterfaceInfos
 
 	for _, v := range slice {
-		i := &InterfaceInfo{
+		i := &InterfaceInfos{
 			Name:   C.GoString(v.interface_name),
 			Speed:  int(v.speed),
 			Factor: int(v.factor),
@@ -120,7 +120,7 @@ func (s *Stat) InteraceInfos() []*InterfaceInfo {
 	return res
 }
 
-func (i *InterfaceInfo) String() string {
+func (i *InterfaceInfos) String() string {
 	return fmt.Sprintf(
 		"Name:\t%s\n"+
 			"Speed:\t\t%d\n"+
