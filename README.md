@@ -96,10 +96,14 @@ Running:    335
 Sleeping:   0
 Stopped:    0
 Zombie:     8
+
+p := s.PagesStats()
+PageIn: 90173695
+PageOut:    90173695
 ```
 
 ### Status
-WORK IN PROGRESS
+
 - [x]  Host infos
 - [x]  cpu stats
 - [x]  load average
@@ -109,4 +113,4 @@ WORK IN PROGRESS
 - [x]  io stats
 - [x]  net io stats
 - [x]  process count
-- [ ]  page stats
+- [x]  page stats

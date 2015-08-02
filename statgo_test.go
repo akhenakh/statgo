@@ -86,3 +86,12 @@ func TestProcess(t *testing.T) {
 
 	t.Log(p)
 }
+
+func TestPages(t *testing.T) {
+	s := NewStat()
+	p := s.PageStats()
+	assert.NotNil(t, s)
+	assert.NotNil(t, p)
+
+	t.Log(p)
+}
