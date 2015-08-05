@@ -19,8 +19,8 @@ type DiskIOStats struct {
 // note that 1st call to 100ms may return NaN as values
 // Go equivalent to sg_cpu_percents
 func (s *Stat) DiskIOStats() []*DiskIOStats {
-	lock.Lock()
-	defer lock.Unlock()
+	s.Lock()
+	defer s.Unlock()
 
 	var num_diskio_stats C.size_t
 	var cArray *C.sg_disk_io_stats = C.sg_get_disk_io_stats_diff(&num_diskio_stats)

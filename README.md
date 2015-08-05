@@ -30,7 +30,7 @@ Note: On OSX you need to install gcc to access cgo.
 ### Usage
 ```
 s := NewStat()
-hi := s.HostInfos()
+s.HostInfos()
 OSName: Darwin
 OSRelease:  14.4.0
 OSVersion:  Darwin Kernel Version 14.4.0: Thu May 28 11:35:04 PDT 2015; root:xnu-2782.30.5~1/RELEASE_X86_64
@@ -40,7 +40,7 @@ NCPUs:      4
 MaxCPUs:    4
 BitWidth:   64
 
-cpu := s.CPUStats()
+s.CPUStats()
 User:       7.500000
 Kernel:     2.500000
 Idle:       90.000000
@@ -51,7 +51,7 @@ LoadMin1:   2.206055
 LoadMin5:   2.031250
 LoadMin15:  1.970703
 
-f := s.FSInfos()[0]
+s.FSInfos()[0]
 DeviceName:         /dev/disk1
 FSType:             hfs
 MountPoint:         /
@@ -64,14 +64,14 @@ UsedInodes:         54841132
 FreeInodes:         6137682
 AvailableInodes:    6137682
 
-interfaces := s.InterfaceInfos()[0]
+s.InterfaceInfos()[0]
 Name:   en2
 Speed:  0
 Factor: 1000000
 Duplex: Full Duplex
 State:  UP
 
-m := s.MemStats()
+s.MemStats()
 Total:      16649420800
 Free:       4323848192
 Used:       12325572608
@@ -80,7 +80,7 @@ SwapTotal:  3221225472
 SwapUsed:   2528378880
 SwapFree:   692846592
 
-n := s.NetIOStats()
+s.NetIOStats()
 IntName:    en0
 TX:         2310272606
 RX:         3336240203
@@ -90,15 +90,15 @@ IErrors:    0
 OErrors:    0
 Collisions: 0
 
-p := s.ProcessStats()
-Total:  343
+s.ProcessStats()
+Total:      343
 Running:    335
 Sleeping:   0
 Stopped:    0
 Zombie:     8
 
-p := s.PagesStats()
-PageIn: 90173695
+s.PagesStats()
+PageIn:     90173695
 PageOut:    90173695
 ```
 

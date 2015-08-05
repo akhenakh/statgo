@@ -26,8 +26,8 @@ type FSInfos struct {
 // FSInfos return an FSInfo struct per mounted filesystem
 // Go equivalent to sg_get_fs_stats
 func (s *Stat) FSInfos() []*FSInfos {
-	lock.Lock()
-	defer lock.Unlock()
+	s.Lock()
+	defer s.Unlock()
 	var fs_size C.size_t
 	var cArray *C.sg_fs_stats = C.sg_get_fs_stats(&fs_size)
 	length := int(fs_size)

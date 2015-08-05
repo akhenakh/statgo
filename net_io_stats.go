@@ -23,8 +23,8 @@ type NetIOStats struct {
 // NetIOStats get interface ios related stats
 // Go equivalent to sg_get_network_io_stats
 func (s *Stat) NetIOStats() []*NetIOStats {
-	lock.Lock()
-	defer lock.Unlock()
+	s.Lock()
+	defer s.Unlock()
 
 	var num_network_stats C.size_t
 	var cArray *C.sg_network_io_stats = C.sg_get_network_io_stats_diff(&num_network_stats)

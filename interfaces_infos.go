@@ -84,8 +84,8 @@ func (s *InterfaceState) UnmarshalText(text []byte) error {
 }
 
 func (s *Stat) InteraceInfos() []*InterfaceInfos {
-	lock.Lock()
-	defer lock.Unlock()
+	s.Lock()
+	defer s.Unlock()
 	var iface_count C.size_t
 	var cArray *C.sg_network_iface_stats = C.sg_get_network_iface_stats(&iface_count)
 	length := int(iface_count)

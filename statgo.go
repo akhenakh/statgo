@@ -8,25 +8,21 @@ import (
 	"sync"
 )
 
-var lock sync.Mutex
-
 // Stat handle to access libstatgrab
 type Stat struct {
+	sync.Mutex
 }
 
 // NewStat return a new Stat handle
 func NewStat() *Stat {
 	s := &Stat{}
-	runtime.SetFinalizer(s, free)
-
-	lock.Lock()
+	runtime.SetFinalizer(s, (*Stat).free)
 	C.sg_init(1)
-	lock.Unlock()
 	return s
 }
 
-func free(s *Stat) {
-	lock.Lock()
+func (s *Stat) free() {
+	s.Lock()
 	C.sg_shutdown()
-	lock.Unlock()
+	s.Unlock()
 }

@@ -14,8 +14,8 @@ type PageStats struct {
 // PageStats get pages related stats
 // Go equivalent to sg_get_page_stats_diff
 func (s *Stat) PageStats() *PageStats {
-	lock.Lock()
-	defer lock.Unlock()
+	s.Lock()
+	defer s.Unlock()
 
 	page_stats := C.sg_get_page_stats_diff(nil)
 

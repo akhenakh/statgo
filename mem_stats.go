@@ -19,8 +19,8 @@ type MemStats struct {
 // MemStats get memory & swap related stats
 // Go equivalent to sg_get_mem_stats & sg_get_swap_stats
 func (s *Stat) MemStats() *MemStats {
-	lock.Lock()
-	defer lock.Unlock()
+	s.Lock()
+	defer s.Unlock()
 
 	mem_stats := C.sg_get_mem_stats(nil)
 	swap_stats := C.sg_get_swap_stats(nil)

@@ -18,8 +18,8 @@ type ProcessStats struct {
 // note that 1st call to 100ms may return NaN as values
 // Go equivalent to sg_cpu_percents
 func (s *Stat) ProcessStats() *ProcessStats {
-	lock.Lock()
-	defer lock.Unlock()
+	s.Lock()
+	defer s.Unlock()
 
 	// Throw away the first reading as thats averaged over the machines uptime
 

@@ -26,9 +26,9 @@ type HostInfos struct {
 // HostInfo get the host informations
 // Go equivalent to sg_host_info
 func (s *Stat) HostInfos() *HostInfos {
-	lock.Lock()
+	s.Lock()
 	stats := C.sg_get_host_info(nil)
-	lock.Unlock()
+	s.Unlock()
 
 	hi := &HostInfos{
 		OSName:    C.GoString(stats.os_name),
