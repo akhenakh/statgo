@@ -7,11 +7,20 @@ import "fmt"
 
 // ProcessStat contains processes count stats
 type ProcessStats struct {
-	Total    int
-	Running  int
+	// The total number of processes
+	Total int
+
+	// The number of running processes
+	Running int
+
+	// The number of sleeping processes
 	Sleeping int
-	Stopped  int
-	Zombie   int
+
+	// The number of stopped processes
+	Stopped int
+
+	// The number of zombie processes
+	Zombie int
 }
 
 // CPUStats get cpu related stats

@@ -10,13 +10,27 @@ import (
 
 // NetIOStat contains network interfaces stats
 type NetIOStats struct {
-	IntName    string
-	TX         int
-	RX         int
-	IPackets   int
-	OPackets   int
-	IErrors    int
-	OErrors    int
+	IntName string
+
+	// Number of bytes transmitted
+	TX int
+
+	// Number of bytes received
+	RX int
+
+	// Number of packets received
+	IPackets int
+
+	// Number of packets transmitted
+	OPackets int
+
+	// Number of receive errors
+	IErrors int
+
+	// Number of transmit errors
+	OErrors int
+
+	// Number of collisions count
 	Collisions int
 }
 

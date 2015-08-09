@@ -7,7 +7,10 @@ import "fmt"
 
 // PageStats contains pages stats
 type PageStats struct {
-	PageIn  int
+	// The number of pages swapped into memory
+	PageIn int
+
+	// The number of pages swapped out of memory (to swap)
 	PageOut int
 }
 

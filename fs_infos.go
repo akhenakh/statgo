@@ -10,13 +10,17 @@ import (
 
 // FSInfo contains filesystem & mountpoints informations
 type FSInfos struct {
-	DeviceName      string
-	FSType          string
-	MountPoint      string
-	Size            int
-	Used            int
-	Free            int
-	Available       int
+	DeviceName string
+	FSType     string
+	MountPoint string
+
+	// Size, Used, Free, Available are expressed in bytes
+	Size      int
+	Used      int
+	Free      int
+	Available int
+
+	// Inodes count
 	TotalInodes     int
 	UsedInodes      int
 	FreeInodes      int

@@ -6,14 +6,28 @@ import "C"
 import "fmt"
 
 // MemStats contains memory & swap stats
+// expressed in bytes
 type MemStats struct {
-	Total     int
-	Free      int
-	Used      int
-	Cache     int
+	// The total amount of real memory in bytes
+	Total int
+
+	// Theount of real memory in bytes.
+	Free int
+
+	// The used amount of real memory in bytes
+	Used int
+
+	// The amount of real memory in bytes used for caching
+	Cache int
+
+	// The total swap space in bytes.
 	SwapTotal int
-	SwapUsed  int
-	SwapFree  int
+
+	// The used swap in bytes
+	SwapUsed int
+
+	// The free swap in bytes
+	SwapFree int
 }
 
 // MemStats get memory & swap related stats

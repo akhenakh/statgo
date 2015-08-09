@@ -5,21 +5,22 @@ package statgo
 import "C"
 import (
 	"fmt"
-	"time"
 )
 
 // CPUStats contains cpu stats
+// Delivers correlated relative cpu counters (where  total is 100%)
 type CPUStats struct {
-	User      float64
-	Kernel    float64
-	Idle      float64
-	IOWait    float64
-	Swap      float64
-	Nice      float64
+	User   float64
+	Kernel float64
+	Idle   float64
+	IOWait float64
+	Swap   float64
+	Nice   float64
+
+	// System load averages
 	LoadMin1  float64
 	LoadMin5  float64
 	LoadMin15 float64
-	timeTaken time.Time
 }
 
 // CPUStats get cpu related stats
