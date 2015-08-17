@@ -22,11 +22,13 @@ func NewStat() *Stat {
 	initDone := make(chan bool)
 	s.exitMessage = make(chan bool)
 
+	C.sg_init(1)
+
 	go func() {
-		// Arrange that main.main runs on main thread.
+		// We need some function calls to be performed on the same thread
+		// Those for which statgrab is using a thread local
 		runtime.LockOSThread()
 		defer runtime.UnlockOSThread()
-		C.sg_init(1)
 
 		// Throw away the first reading as thats averaged over the machines uptime
 		C.sg_get_cpu_stats_diff(nil)
