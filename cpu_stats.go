@@ -6,13 +6,16 @@ import "C"
 import "fmt"
 
 // CPUStats contains cpu stats
+// Delivers correlated relative cpu counters (where  total is 100%)
 type CPUStats struct {
-	User      float64
-	Kernel    float64
-	Idle      float64
-	IOWait    float64
-	Swap      float64
-	Nice      float64
+	User   float64
+	Kernel float64
+	Idle   float64
+	IOWait float64
+	Swap   float64
+	Nice   float64
+
+	// System load averages
 	LoadMin1  float64
 	LoadMin5  float64
 	LoadMin15 float64
@@ -24,6 +27,10 @@ type CPUStats struct {
 func (s *Stat) CPUStats() *CPUStats {
 	s.Lock()
 	defer s.Unlock()
+
+	// Throw away the first reading as thats averaged over the machines uptime
+	C.sg_snapshot()
+	C.sg_get_cpu_stats_diff(nil)
 
 	var cpu *CPUStats
 	do(func() {

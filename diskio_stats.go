@@ -10,6 +10,7 @@ import (
 )
 
 // DiskIOStats contains disk io stats
+// Expressed in bytes
 type DiskIOStats struct {
 	DiskName   string
 	ReadBytes  int
@@ -22,7 +23,7 @@ type DiskIOStats struct {
 
 // CPUStats get cpu related stats
 // note that 1st call to 100ms may return NaN as values
-// Go equivalent to sg_cpu_percents
+// Go equivalent to sg_disk_io_stats
 func (s *Stat) DiskIOStats() []*DiskIOStats {
 	s.Lock()
 	defer s.Unlock()
