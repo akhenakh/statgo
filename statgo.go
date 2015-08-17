@@ -11,18 +11,63 @@ import (
 // Stat handle to access libstatgrab
 type Stat struct {
 	sync.Mutex
+	exitMessage chan bool
 }
 
 // NewStat return a new Stat handle
 func NewStat() *Stat {
 	s := &Stat{}
 	runtime.SetFinalizer(s, (*Stat).free)
-	C.sg_init(1)
+
+	initDone := make(chan bool)
+	s.exitMessage = make(chan bool)
+
+	go func() {
+		// Arrange that main.main runs on main thread.
+		runtime.LockOSThread()
+		defer runtime.UnlockOSThread()
+		C.sg_init(1)
+
+		// Throw away the first reading as thats averaged over the machines uptime
+		C.sg_get_cpu_stats_diff(nil)
+		C.sg_get_network_io_stats_diff(nil)
+		C.sg_get_page_stats_diff(nil)
+		C.sg_get_disk_io_stats_diff(nil)
+
+		initDone <- true
+
+		for {
+			select {
+			case <-s.exitMessage:
+				break
+			case f := <-mainfunc:
+				f()
+			}
+		}
+
+	}()
+
+	<-initDone
+
 	return s
 }
 
 func (s *Stat) free() {
 	s.Lock()
 	C.sg_shutdown()
+	s.exitMessage <- true
 	s.Unlock()
+}
+
+// queue of work to run in main thread.
+var mainfunc = make(chan func())
+
+// do runs f on the main thread.
+func do(f func()) {
+	done := make(chan bool, 1)
+	mainfunc <- func() {
+		f()
+		done <- true
+	}
+	<-done
 }

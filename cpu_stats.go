@@ -3,10 +3,7 @@ package statgo
 // #cgo LDFLAGS: -lstatgrab
 // #include <statgrab.h>
 import "C"
-import (
-	"fmt"
-	"time"
-)
+import "fmt"
 
 // CPUStats contains cpu stats
 type CPUStats struct {
@@ -19,7 +16,6 @@ type CPUStats struct {
 	LoadMin1  float64
 	LoadMin5  float64
 	LoadMin15 float64
-	timeTaken time.Time
 }
 
 // CPUStats get cpu related stats
@@ -29,28 +25,26 @@ func (s *Stat) CPUStats() *CPUStats {
 	s.Lock()
 	defer s.Unlock()
 
-	// Throw away the first reading as thats averaged over the machines uptime
-	C.sg_snapshot()
-	C.sg_get_cpu_stats_diff(nil)
+	var cpu *CPUStats
+	do(func() {
 
-	cpu_percent := C.sg_get_cpu_percents_of(C.sg_last_diff_cpu_percent, nil)
+		cpu_percent := C.sg_get_cpu_percents_of(C.sg_last_diff_cpu_percent, nil)
 
-	C.sg_snapshot()
+		load_stat := C.sg_get_load_stats(nil)
 
-	load_stat := C.sg_get_load_stats(nil)
-
-	cpu := &CPUStats{
-		User:      float64(cpu_percent.user),
-		Kernel:    float64(cpu_percent.kernel),
-		Idle:      float64(cpu_percent.idle),
-		IOWait:    float64(cpu_percent.iowait),
-		Swap:      float64(cpu_percent.swap),
-		Nice:      float64(cpu_percent.nice),
-		LoadMin1:  float64(load_stat.min1),
-		LoadMin5:  float64(load_stat.min5),
-		LoadMin15: float64(load_stat.min15),
-		//TODO: timetaken
-	}
+		cpu = &CPUStats{
+			User:      float64(cpu_percent.user),
+			Kernel:    float64(cpu_percent.kernel),
+			Idle:      float64(cpu_percent.idle),
+			IOWait:    float64(cpu_percent.iowait),
+			Swap:      float64(cpu_percent.swap),
+			Nice:      float64(cpu_percent.nice),
+			LoadMin1:  float64(load_stat.min1),
+			LoadMin5:  float64(load_stat.min5),
+			LoadMin15: float64(load_stat.min15),
+			//TODO: timetaken
+		}
+	})
 	return cpu
 }
 

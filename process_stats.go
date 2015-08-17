@@ -22,7 +22,6 @@ func (s *Stat) ProcessStats() *ProcessStats {
 	defer s.Unlock()
 
 	// Throw away the first reading as thats averaged over the machines uptime
-
 	p_stat := C.sg_get_process_count_of(C.sg_entire_process_count)
 
 	p := &ProcessStats{

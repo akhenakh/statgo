@@ -1,7 +1,7 @@
 package statgo
 
 import (
-	"math"
+	"sync"
 	"testing"
 	"time"
 
@@ -26,8 +26,6 @@ func TestCPU(t *testing.T) {
 	time.Sleep(100 * time.Millisecond)
 
 	cpu = s.CPUStats()
-	assert.False(t, math.IsNaN(cpu.User), math.IsNaN(cpu.Kernel), math.IsNaN(cpu.Idle))
-	assert.False(t, math.IsNaN(cpu.LoadMin1), math.IsNaN(cpu.LoadMin5), math.IsNaN(cpu.LoadMin15))
 	t.Log(cpu)
 }
 
@@ -94,4 +92,34 @@ func TestPages(t *testing.T) {
 	assert.NotNil(t, p)
 
 	t.Log(p)
+}
+
+func TestGoRoutines(t *testing.T) {
+	// test for ticket #2
+	// ping -s 20000 localhost, check for growing lo0 stats ([0] at least on OSX)
+
+	t.Skip()
+	var wg sync.WaitGroup
+	s := NewStat()
+
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		t.Log("1", s.NetIOStats()[0])
+	}()
+
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		time.Sleep(2500 * time.Millisecond)
+		t.Log("2", s.NetIOStats()[0])
+	}()
+
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		time.Sleep(5 * time.Second)
+		t.Log("4", s.NetIOStats()[0])
+	}()
+	wg.Wait()
 }
