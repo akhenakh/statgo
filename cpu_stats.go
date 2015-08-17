@@ -28,10 +28,6 @@ func (s *Stat) CPUStats() *CPUStats {
 	s.Lock()
 	defer s.Unlock()
 
-	// Throw away the first reading as thats averaged over the machines uptime
-	C.sg_snapshot()
-	C.sg_get_cpu_stats_diff(nil)
-
 	var cpu *CPUStats
 	do(func() {
 
