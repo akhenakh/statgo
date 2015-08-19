@@ -3,7 +3,10 @@ package statgo
 // #cgo LDFLAGS: -lstatgrab
 // #include <statgrab.h>
 import "C"
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 // CPUStats contains cpu stats
 // Delivers correlated relative cpu counters (where  total is 100%)
@@ -19,6 +22,11 @@ type CPUStats struct {
 	LoadMin1  float64
 	LoadMin5  float64
 	LoadMin15 float64
+
+	// The time taken in seconds since the last call of the function
+	Period time.Duration
+
+	TimeTaken time.Time
 }
 
 // CPUStats get cpu related stats
@@ -31,7 +39,7 @@ func (s *Stat) CPUStats() *CPUStats {
 	var cpu *CPUStats
 	do(func() {
 
-		cpu_percent := C.sg_get_cpu_percents_of(C.sg_last_diff_cpu_percent, nil)
+		cpu_percent := C.sg_get_cpu_percents_of(C.sg_new_diff_cpu_percent, nil)
 
 		load_stat := C.sg_get_load_stats(nil)
 
@@ -45,7 +53,8 @@ func (s *Stat) CPUStats() *CPUStats {
 			LoadMin1:  float64(load_stat.min1),
 			LoadMin5:  float64(load_stat.min5),
 			LoadMin15: float64(load_stat.min15),
-			//TODO: timetaken
+			Period:    time.Duration(int(cpu_percent.time_taken)) * time.Second,
+			TimeTaken: time.Now(),
 		}
 	})
 	return cpu
@@ -61,7 +70,9 @@ func (c *CPUStats) String() string {
 			"Nice:\t%f\n"+
 			"LoadMin1:\t%f\n"+
 			"LoadMin5:\t%f\n"+
-			"LoadMin15:\t%f\n",
+			"LoadMin15:\t%f\n"+
+			"Period:\t%v\n"+
+			"TimeTaken:\t%s\n",
 		c.User,
 		c.Kernel,
 		c.Idle,
@@ -70,5 +81,7 @@ func (c *CPUStats) String() string {
 		c.Nice,
 		c.LoadMin1,
 		c.LoadMin5,
-		c.LoadMin15)
+		c.LoadMin15,
+		c.Period,
+		c.TimeTaken)
 }

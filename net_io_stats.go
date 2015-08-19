@@ -35,7 +35,8 @@ type NetIOStats struct {
 	Collisions int
 
 	// the time period over which tx and rx were transferred
-	Period    time.Duration
+	Period time.Duration
+
 	TimeTaken time.Time
 }
 

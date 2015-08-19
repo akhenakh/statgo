@@ -114,3 +114,6 @@ PageOut:    90173695
 - [x]  net io stats
 - [x]  process count
 - [x]  page stats
+
+### Contributors
+* [HeinOldewage](https://github.com/HeinOldewage)

@@ -17,7 +17,8 @@ type PageStats struct {
 	PageOut int
 
 	// The time period over which pages_pagein and pages_pageout weretransferred.
-	Period    time.Duration
+	Period time.Duration
+
 	TimeTaken time.Time
 }
 

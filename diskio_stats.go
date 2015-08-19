@@ -17,7 +17,8 @@ type DiskIOStats struct {
 	WriteBytes int
 
 	// The time period over which read_bytes and write_bytes were transferred.
-	Period    time.Duration
+	Period time.Duration
+
 	TimeTaken time.Time
 }
 
@@ -57,7 +58,7 @@ func (d *DiskIOStats) String() string {
 			"ReadBytes:\t%d\n"+
 			"WriteBytes:\t%d\n"+
 			"Period:\t%v\n"+
-			"TimeTaken:\t%d\n",
+			"TimeTaken:\t%s\n",
 		d.DiskName,
 		d.ReadBytes,
 		d.WriteBytes,

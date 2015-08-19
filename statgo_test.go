@@ -94,6 +94,20 @@ func TestPages(t *testing.T) {
 	t.Log(p)
 }
 
+func TestGoRoutineCleanup(t *testing.T) {
+	var wg sync.WaitGroup
+
+	s := NewStat()
+	s.PageStats()
+
+	go func() {
+		defer wg.Done()
+		s.free()
+	}()
+
+	wg.Wait()
+}
+
 func TestGoRoutines(t *testing.T) {
 	// test for ticket #2
 	// ping -s 20000 localhost, check for growing lo0 stats ([0] at least on OSX)
