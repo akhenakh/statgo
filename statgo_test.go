@@ -100,6 +100,7 @@ func TestGoRoutineCleanup(t *testing.T) {
 	s := NewStat()
 	s.PageStats()
 
+	wg.Add(1)
 	go func() {
 		defer wg.Done()
 		s.free()
