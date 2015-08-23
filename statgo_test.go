@@ -244,3 +244,11 @@ func TestGoRoutines(t *testing.T) {
 	}()
 	wg.Wait()
 }
+
+func TestHostsInfos(t *testing.T) {
+
+	s := NewStat()
+	s.HostInfos()
+	s.HostInfos()
+
+}

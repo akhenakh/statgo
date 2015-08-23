@@ -6,7 +6,6 @@ import "C"
 import (
 	"fmt"
 	"time"
-	"unsafe"
 )
 
 // HostInfo contains informations related to the system
@@ -41,8 +40,6 @@ func (s *Stat) HostInfos() *HostInfos {
 		BitWidth:  int(stats.bitwidth),
 		//TODO: uptime
 	}
-
-	C.sg_free_stats_buf(unsafe.Pointer(stats))
 
 	return hi
 }
