@@ -1,6 +1,11 @@
 package statgo
 
 import (
+	"fmt"
+	"io"
+	"io/ioutil"
+	"net"
+	"runtime"
 	"sync"
 	"testing"
 	"time"
@@ -23,10 +28,55 @@ func TestCPU(t *testing.T) {
 	cpu := s.CPUStats()
 	assert.NotNil(t, s)
 	assert.NotNil(t, cpu)
+
 	time.Sleep(100 * time.Millisecond)
 
 	cpu = s.CPUStats()
 	t.Log(cpu)
+}
+
+func TestCPULoad(t *testing.T) {
+	s := NewStat()
+	initialCPU := s.CPUStats()
+	cpuCount := runtime.NumCPU()
+	runtime.GOMAXPROCS(cpuCount)
+	var wg sync.WaitGroup
+	wg.Add(cpuCount)
+	doneChan := make(chan bool, cpuCount)
+	for k := 0; k < cpuCount; k++ {
+		go func() {
+			defer wg.Done()
+			var i uint64 = 2
+			for {
+				select {
+				case <-doneChan:
+					{
+						return
+					}
+				default:
+					{
+					}
+				}
+				i = i * i
+			}
+		}()
+	}
+	s.CPUStats()
+	testDuration := 5 * time.Second
+	time.Sleep(testDuration)
+	cpu := s.CPUStats()
+	for k := 0; k < cpuCount; k++ {
+		doneChan <- true
+	}
+	wg.Wait()
+
+	//Assure that the Period of the stats is about the same as the Duration of the stats.
+	assert.True(t, cpu.Period-testDuration < time.Second*2 || cpu.Period-testDuration > 2*time.Second)
+	t.Log("CPU Idle %:", cpu.Idle)
+	//The CPU should not be idle if we run cpuCount goroutines
+	assert.True(t, cpu.Idle < 50.0)
+	//The stats should have changed from the start till the finish of this test
+	assert.True(t, cpu.Idle != initialCPU.Idle)
 }
 
 func TestFSInfos(t *testing.T) {
@@ -74,6 +124,62 @@ func TestNetIO(t *testing.T) {
 	assert.NotNil(t, n)
 
 	t.Log(n)
+}
+
+func getInterface(arr []*NetIOStats, names ...string) (*NetIOStats, error) {
+	for _, ns := range arr {
+		for _, name := range names {
+			if ns.IntName == name {
+				return ns, nil
+			}
+		}
+	}
+	return nil, fmt.Errorf("No interface not found matching any of %v", names)
+}
+
+func TestNetIOTXRX(t *testing.T) {
+	s := NewStat()
+	beforeNetIOArr := s.NetIOStats()
+	beforeNetIO, err := getInterface(beforeNetIOArr, "lo", "lo0")
+	if err != nil {
+		t.Log(err)
+		t.FailNow()
+		return
+	}
+	ln, err := net.Listen("tcp", "127.0.0.1:8080")
+	if err != nil {
+		t.Log("Could not listen on port 8080", err)
+		t.SkipNow()
+		return
+	}
+	defer ln.Close()
+	go func() {
+		conn, err := ln.Accept()
+		if err != nil {
+			return
+		}
+		defer conn.Close()
+		io.Copy(ioutil.Discard, conn)
+	}()
+	conn, err := net.Dial("tcp", "127.0.0.1:8080")
+	if err != nil {
+		t.Log("Could not connect to server:", err)
+		t.SkipNow()
+		return
+	}
+	defer conn.Close()
+	conn.Write(make([]byte, 1024*1024))
+	afterNetIOArr := s.NetIOStats()
+	afterNetIO, err := getInterface(afterNetIOArr, "lo", "lo0")
+	if err != nil {
+		t.Log(err)
+		t.SkipNow()
+		return
+	}
+	t.Log("BeforeData:", beforeNetIO)
+	t.Log("After 1MB data:", afterNetIO)
+	assert.True(t, beforeNetIO.TX < afterNetIO.TX)
+	assert.True(t, beforeNetIO.RX < afterNetIO.TX)
 }
 
 func TestProcess(t *testing.T) {
