@@ -12,6 +12,7 @@ You need at least libstatgrab 0.91, Debian & Ubuntu only have 0.90 ...
 
 On Debian/Ubunt & OSX, you can simply install libstatgrab with the usual commands:
 ```
+wget http://freecode.com/urls/4345ce7576a76bc74c97b8c3e471e379 -O - | tar -zxf -
 ./configure --prefix=/usr/local
 make
 sudo make install
