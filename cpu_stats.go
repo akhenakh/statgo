@@ -39,21 +39,21 @@ func (s *Stat) CPUStats() *CPUStats {
 	var cpu *CPUStats
 	do(func() {
 
-		cpu_percent := C.sg_get_cpu_percents_of(C.sg_new_diff_cpu_percent, nil)
+		cpup := C.sg_get_cpu_percents_of(C.sg_new_diff_cpu_percent, nil)
 
-		load_stat := C.sg_get_load_stats(nil)
+		loadStat := C.sg_get_load_stats(nil)
 
 		cpu = &CPUStats{
-			User:      float64(cpu_percent.user),
-			Kernel:    float64(cpu_percent.kernel),
-			Idle:      float64(cpu_percent.idle),
-			IOWait:    float64(cpu_percent.iowait),
-			Swap:      float64(cpu_percent.swap),
-			Nice:      float64(cpu_percent.nice),
-			LoadMin1:  float64(load_stat.min1),
-			LoadMin5:  float64(load_stat.min5),
-			LoadMin15: float64(load_stat.min15),
-			Period:    time.Duration(int(cpu_percent.time_taken)) * time.Second,
+			User:      float64(cpup.user),
+			Kernel:    float64(cpup.kernel),
+			Idle:      float64(cpup.idle),
+			IOWait:    float64(cpup.iowait),
+			Swap:      float64(cpup.swap),
+			Nice:      float64(cpup.nice),
+			LoadMin1:  float64(loadStat.min1),
+			LoadMin5:  float64(loadStat.min5),
+			LoadMin15: float64(loadStat.min15),
+			Period:    time.Duration(int(cpup.time_taken)) * time.Second,
 			TimeTaken: time.Now(),
 		}
 	})

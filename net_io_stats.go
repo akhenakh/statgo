@@ -9,7 +9,7 @@ import (
 	"unsafe"
 )
 
-// NetIOStat contains network interfaces stats
+// NetIOStats contains network interfaces stats
 type NetIOStats struct {
 	IntName string
 
@@ -49,9 +49,9 @@ func (s *Stat) NetIOStats() []*NetIOStats {
 	var res []*NetIOStats
 
 	do(func() {
-		var num_network_stats C.size_t
-		var cArray *C.sg_network_io_stats = C.sg_get_network_io_stats_diff(&num_network_stats)
-		length := int(num_network_stats)
+		var nSize C.size_t
+		var cArray *C.sg_network_io_stats = C.sg_get_network_io_stats_diff(&nSize)
+		length := int(nSize)
 		slice := (*[1 << 16]C.sg_network_io_stats)(unsafe.Pointer(cArray))[:length:length]
 
 		for _, v := range slice {

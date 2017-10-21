@@ -8,7 +8,7 @@ import (
 	"unsafe"
 )
 
-// FSInfo contains filesystem & mountpoints informations
+// FSInfos contains filesystem & mountpoints informations
 type FSInfos struct {
 	DeviceName string
 	FSType     string
@@ -32,9 +32,9 @@ type FSInfos struct {
 func (s *Stat) FSInfos() []*FSInfos {
 	s.Lock()
 	defer s.Unlock()
-	var fs_size C.size_t
-	var cArray *C.sg_fs_stats = C.sg_get_fs_stats(&fs_size)
-	length := int(fs_size)
+	var fsSize C.size_t
+	var cArray *C.sg_fs_stats = C.sg_get_fs_stats(&fsSize)
+	length := int(fsSize)
 	slice := (*[1 << 16]C.sg_fs_stats)(unsafe.Pointer(cArray))[:length:length]
 
 	var res []*FSInfos

@@ -22,7 +22,7 @@ type DiskIOStats struct {
 	TimeTaken time.Time
 }
 
-// CPUStats get cpu related stats
+// DiskIOStats get I/Os related stats
 // note that 1st call to 100ms may return NaN as values
 // Go equivalent to sg_disk_io_stats
 func (s *Stat) DiskIOStats() []*DiskIOStats {
@@ -31,9 +31,9 @@ func (s *Stat) DiskIOStats() []*DiskIOStats {
 
 	var res []*DiskIOStats
 	do(func() {
-		var num_diskio_stats C.size_t
-		var cArray *C.sg_disk_io_stats = C.sg_get_disk_io_stats_diff(&num_diskio_stats)
-		length := int(num_diskio_stats)
+		var stSize C.size_t
+		var cArray *C.sg_disk_io_stats = C.sg_get_disk_io_stats_diff(&stSize)
+		length := int(stSize)
 		slice := (*[1 << 16]C.sg_disk_io_stats)(unsafe.Pointer(cArray))[:length:length]
 
 		for _, v := range slice {

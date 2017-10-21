@@ -41,7 +41,7 @@ func NewStat() *Stat {
 		for {
 			select {
 			case <-s.exitMessage:
-				break
+				return
 			case f := <-mainfunc:
 				f()
 			}

@@ -5,7 +5,7 @@ package statgo
 import "C"
 import "fmt"
 
-// ProcessStat contains processes count stats
+// ProcessStats contains processes count stats
 type ProcessStats struct {
 	// The total number of processes
 	Total int
@@ -23,7 +23,7 @@ type ProcessStats struct {
 	Zombie int
 }
 
-// CPUStats get cpu related stats
+// ProcessStats get prceosses related stats
 // note that 1st call to 100ms may return NaN as values
 // Go equivalent to sg_cpu_percents
 func (s *Stat) ProcessStats() *ProcessStats {
@@ -31,14 +31,14 @@ func (s *Stat) ProcessStats() *ProcessStats {
 	defer s.Unlock()
 
 	// Throw away the first reading as thats averaged over the machines uptime
-	p_stat := C.sg_get_process_count_of(C.sg_entire_process_count)
+	pstat := C.sg_get_process_count_of(C.sg_entire_process_count)
 
 	p := &ProcessStats{
-		Total:    int(p_stat.total),
-		Running:  int(p_stat.running),
-		Sleeping: int(p_stat.sleeping),
-		Stopped:  int(p_stat.stopped),
-		Zombie:   int(p_stat.zombie),
+		Total:    int(pstat.total),
+		Running:  int(pstat.running),
+		Sleeping: int(pstat.sleeping),
+		Stopped:  int(pstat.stopped),
+		Zombie:   int(pstat.zombie),
 	}
 	return p
 }

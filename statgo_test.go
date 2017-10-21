@@ -72,7 +72,7 @@ func TestCPULoad(t *testing.T) {
 
 	//Assure that the Period of the stats is about the same as the Duration of the stats.
 	assert.True(t, cpu.Period-testDuration < time.Second*2 || cpu.Period-testDuration > 2*time.Second)
-	t.Log("CPU Idle %:", cpu.Idle)
+	t.Logf("CPU Idle %f:", cpu.Idle)
 	//The CPU should not be idle if we run cpuCount goroutines
 	assert.True(t, cpu.Idle < 50.0)
 	//The stats should have changed from the start till the finish of this test
@@ -154,8 +154,8 @@ func TestNetIOTXRX(t *testing.T) {
 	}
 	defer ln.Close()
 	go func() {
-		conn, err := ln.Accept()
-		if err != nil {
+		conn, aerr := ln.Accept()
+		if aerr != nil {
 			return
 		}
 		defer conn.Close()

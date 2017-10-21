@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-// HostInfo contains informations related to the system
+// HostInfos contains informations related to the system
 type HostInfos struct {
 	OSName    string
 	OSRelease string
@@ -22,7 +22,7 @@ type HostInfos struct {
 	systime   time.Time
 }
 
-// HostInfo get the host informations
+// HostInfos get the host informations
 // Go equivalent to sg_host_info
 func (s *Stat) HostInfos() *HostInfos {
 	s.Lock()

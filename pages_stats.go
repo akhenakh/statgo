@@ -31,12 +31,12 @@ func (s *Stat) PageStats() *PageStats {
 	var p *PageStats
 
 	do(func() {
-		page_stats := C.sg_get_page_stats_diff(nil)
+		pstats := C.sg_get_page_stats_diff(nil)
 
 		p = &PageStats{
-			PageIn:    int(page_stats.pages_pagein),
-			PageOut:   int(page_stats.pages_pageout),
-			Period:    time.Duration(int(page_stats.systime)),
+			PageIn:    int(pstats.pages_pagein),
+			PageOut:   int(pstats.pages_pageout),
+			Period:    time.Duration(int(pstats.systime)),
 			TimeTaken: time.Now(),
 		}
 	})

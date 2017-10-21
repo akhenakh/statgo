@@ -36,17 +36,17 @@ func (s *Stat) MemStats() *MemStats {
 	s.Lock()
 	defer s.Unlock()
 
-	mem_stats := C.sg_get_mem_stats(nil)
-	swap_stats := C.sg_get_swap_stats(nil)
+	memStats := C.sg_get_mem_stats(nil)
+	swapStats := C.sg_get_swap_stats(nil)
 
 	m := &MemStats{
-		Total:     int(mem_stats.total),
-		Free:      int(mem_stats.free),
-		Used:      int(mem_stats.used),
-		Cache:     int(mem_stats.cache),
-		SwapTotal: int(swap_stats.total),
-		SwapUsed:  int(swap_stats.used),
-		SwapFree:  int(swap_stats.free),
+		Total:     int(memStats.total),
+		Free:      int(memStats.free),
+		Used:      int(memStats.used),
+		Cache:     int(memStats.cache),
+		SwapTotal: int(swapStats.total),
+		SwapUsed:  int(swapStats.used),
+		SwapFree:  int(swapStats.free),
 	}
 	return m
 }
