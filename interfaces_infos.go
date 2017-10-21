@@ -8,10 +8,10 @@ import (
 	"unsafe"
 )
 
-// InterfaceInfos
+// InterfaceInfos network interface related infos
 type InterfaceInfos struct {
 	Name string
-	// In factor/sec
+	// Speed in factor/sec
 	Speed  int
 	Factor int
 	Duplex InterfaceDuplexType

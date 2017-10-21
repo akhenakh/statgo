@@ -32,7 +32,10 @@ build:
           rm -rf libstatgrab-0.91 libstatgrab-0.91.tar.gz
           
     # golint step!
-    - wercker/golint
+    - script:
+        name: golint 
+        code: |
+          golint .
 
     # Build the project
     - script:
