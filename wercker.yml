@@ -1,4 +1,4 @@
-box: google/golang
+box: golang
 dev:
   steps:
     - script:
@@ -32,11 +32,7 @@ build:
           rm -rf libstatgrab-0.91 libstatgrab-0.91.tar.gz
           
     # golint step!
-    - script:
-        name: golint 
-        code: |
-          golint .
-
+    - wercker/golint
     # Build the project
     - script:
         name: go build
