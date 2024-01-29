@@ -1,9 +1,12 @@
 [![wercker status](https://app.wercker.com/status/c56e26bf18be587114d26764a7a0ce7a/s/master "wercker status")](https://app.wercker.com/project/byKey/c56e26bf18be587114d26764a7a0ce7a) [![](https://godoc.org/github.com/akhenakh/statgo?status.png)](http://godoc.org/github.com/akhenakh/statgo) 
 
+![CI status](https://github.com/bieli/statgo/actions/workflows/ci.yaml/badge.svg)
+
+
 StatGo
 ======
 StatGo give you access to OS metrics like network interface bandwith, cpus usage ...  
-It supports FreeBSD, Linux, OSX & more, it's in fact a [libstatgrab](http://www.i-scream.org/libstatgrab/) binding for Golang.  
+It supports FreeBSD, Linux, OSX & more, it's in fact a [libstatgrab](https://libstatgrab.org/) binding for Golang.  
 Tested on FreeBSD, OSX, Linux amd64, Linux arm.
 
 
@@ -26,6 +29,11 @@ export CGO_LDFLAGS=-L/usr/local/lib
 Note: On OSX you need to install gcc to access cgo.
 
     go get github.com/akhenakh/statgo
+
+Note: On OSX you need to install brew and install library in OS with this cmd:
+
+    brew install libstatgrab
+
 
 ### Usage
 ```
@@ -100,6 +108,14 @@ Zombie:     8
 s.PagesStats()
 PageIn:     90173695
 PageOut:    90173695
+
+s.UserStats()[0]
+LoginName:  penguin,
+RecordId:   ,
+Device:     :0,
+Hostname:   :0,
+LoginTime:  170515858,
+SysTime:    2023-01-29T21:38:53Z"
 ```
 
 ### Status
@@ -114,6 +130,8 @@ PageOut:    90173695
 - [x]  net io stats
 - [x]  process count
 - [x]  page stats
+- [x]  users stats
 
 ### Contributors
 * [HeinOldewage](https://github.com/HeinOldewage)
+* [Marcin Bielak -> bieli](https://github.com/bieli)
