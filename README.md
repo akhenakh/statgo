@@ -2,6 +2,7 @@
 
 ![CI status](https://github.com/bieli/statgo/actions/workflows/ci.yaml/badge.svg)
 
+![go report](https://goreportcard.com/badge/github.com/bieli/statgo)
 
 StatGo
 ======
