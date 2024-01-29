@@ -64,10 +64,10 @@ func (s *Stat) UserStats() []*UserStats {
 func (m *UserStats) String() string {
 	return fmt.Sprintf(
 		"LoginName:\t%s\n"+
-			"RecordId:\t\t%d\n"+
-			"Device:\t\t%d\n"+
-			"Hostname:\t\t%d\n"+
-			"LoginTime:\t%d\n",
+			"RecordId:\t\t%s\n"+
+			"Device:\t\t%s\n"+
+			"Hostname:\t\t%s\n"+
+			"LoginTime:\t%v\n",
 		m.LoginName,
 		m.RecordId,
 		m.Device,
